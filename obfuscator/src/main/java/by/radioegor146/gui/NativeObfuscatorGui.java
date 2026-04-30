@@ -66,7 +66,7 @@ import java.util.stream.Stream;
 public class NativeObfuscatorGui extends Application {
 
     private static final Object OUTPUT_LOCK = new Object();
-    private static final String VERSION = "3.5.4r";
+    private static final String VERSION = "v1.0.0";
     private static final String LOGO_RESOURCE = "native-obfuscator-gui-logo.png";
 
     private final TextField inputJarField = new TextField();
@@ -173,7 +173,7 @@ public class NativeObfuscatorGui extends Application {
         languageLabel.getStyleClass().add("toolbar-label");
         ComboBox<UiLanguage> languageBox = new ComboBox<>();
         languageBox.getStyleClass().add("language-box");
-        languageBox.getItems().addAll(UiLanguage.EN);
+        languageBox.getItems().addAll(UiLanguage.EN, UiLanguage.ZH);
         languageBox.setValue(language);
         languageBox.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null && newValue != language) {
@@ -927,7 +927,7 @@ public class NativeObfuscatorGui extends Application {
 
     private void showToast(boolean success) {
         toastTimer.stop();
-        toastLabel.setText(success ? "Conversion successful" : "Conversion Failed");
+        toastLabel.setText(success ? t("toast.success") : t("toast.failed"));
         toastLabel.getStyleClass().removeAll("toast-success", "toast-failed");
         addStyleClass(toastLabel, success ? "toast-success" : "toast-failed");
         toastLabel.setVisible(true);
@@ -970,7 +970,7 @@ public class NativeObfuscatorGui extends Application {
     }
 
     private String t(String key) {
-        return en(key);
+        return language == UiLanguage.EN ? en(key) : zh(key);
     }
 
     private String zh(String key) {
@@ -1049,6 +1049,8 @@ public class NativeObfuscatorGui extends Application {
             case "log.openOutputFailed": return "无法打开输出目录";
             case "alert.configError": return "配置错误";
             case "alert.failed": return "转换失败";
+            case "toast.success": return "转换成功";
+            case "toast.failed": return "转换失败";
             case "error.inputRequired": return "请选择输入 JAR";
             case "error.inputJar": return "输入文件必须是 .jar";
             case "error.outputRequired": return "请选择输出目录";
@@ -1139,6 +1141,8 @@ public class NativeObfuscatorGui extends Application {
             case "log.openOutputFailed": return "Failed to open output directory";
             case "alert.configError": return "Config Error";
             case "alert.failed": return "Conversion Failed";
+            case "toast.success": return "Conversion successful";
+            case "toast.failed": return "Conversion failed";
             case "error.inputRequired": return "Choose an input JAR";
             case "error.inputJar": return "Input file must be a .jar";
             case "error.outputRequired": return "Choose an output directory";
@@ -1158,7 +1162,8 @@ public class NativeObfuscatorGui extends Application {
     }
 
     private enum UiLanguage {
-        EN("English");
+        EN("English"),
+        ZH("中文");
 
         private final String label;
 

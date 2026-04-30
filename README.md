@@ -136,10 +136,6 @@ Run the obfuscator module tests:
 
 Some integration tests depend on external CMake/toolchain availability. Those tests are skipped when the required environment is missing, and the basic unit tests can still pass.
 
-## Logging
-
-The GUI build pipeline logs through SLF4J and mirrors output to the Console panel. Conversion errors print stack traces in the Console and display the red failure toast at the bottom of the window.
-
 ## License
 
 This project is licensed under GPL-3.0. See `LICENSE` for details.
