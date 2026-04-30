@@ -28,6 +28,10 @@
     -fx-border-radius: 8px;
 }
 
+.brand-logo {
+    -fx-effect: dropshadow(gaussian, rgba(32, 33, 36, 0.12), 10, 0.14, 0, 2);
+}
+
 .brand-title {
     -fx-font-size: 18px;
     -fx-font-weight: 700;

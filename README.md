@@ -1,5 +1,9 @@
 # Native Obfuscator GUI
 
+<p align="center">
+  <img src="obfuscator/src/main/resources/by/radioegor146/gui/native-obfuscator-gui-logo.png" width="128" alt="Native Obfuscator GUI logo">
+</p>
+
 ## Project Overview
 
 Native Obfuscator GUI is a JavaFX desktop application for Java application protection workflows. It builds on the Native Obfuscator conversion engine to transform selected Java bytecode into generated C++ native code, then produces an output JAR that can be packaged and executed with native components.

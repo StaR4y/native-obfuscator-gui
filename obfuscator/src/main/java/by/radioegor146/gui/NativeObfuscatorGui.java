@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -27,6 +28,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -64,6 +67,7 @@ public class NativeObfuscatorGui extends Application {
 
     private static final Object OUTPUT_LOCK = new Object();
     private static final String VERSION = "3.5.4r";
+    private static final String LOGO_RESOURCE = "native-obfuscator-gui-logo.png";
 
     private final TextField inputJarField = new TextField();
     private final TextField outputDirField = new TextField();
@@ -93,6 +97,7 @@ public class NativeObfuscatorGui extends Application {
     private TabPane detailsTabPane;
     private UiLanguage language = UiLanguage.EN;
     private Task<Void> activeTask;
+    private Image logoImage;
     private String stylesheet;
     private String statusKey = "status.waiting";
 
@@ -110,11 +115,15 @@ public class NativeObfuscatorGui extends Application {
     @Override
     public void start(Stage stage) {
         stylesheet = getClass().getResource("native-obfuscator.css").toExternalForm();
+        logoImage = loadLogoImage();
 
         Scene scene = new Scene(createRoot(stage), 1220, 780);
         scene.getStylesheets().add(stylesheet);
 
         stage.setTitle("Native Obfuscator");
+        if (logoImage != null) {
+            stage.getIcons().add(logoImage);
+        }
         stage.setMinWidth(1080);
         stage.setMinHeight(700);
         stage.setScene(scene);
@@ -148,8 +157,7 @@ public class NativeObfuscatorGui extends Application {
         header.getStyleClass().add("app-header");
         header.setAlignment(Pos.CENTER_LEFT);
 
-        Region mark = new Region();
-        mark.getStyleClass().add("brand-mark");
+        Node mark = createBrandMark();
 
         VBox titleBox = new VBox(2);
         Label title = new Label("Native Obfuscator");
@@ -181,6 +189,32 @@ public class NativeObfuscatorGui extends Application {
 
         header.getChildren().addAll(mark, titleBox, spacer, languageLabel, languageBox, openOutputButton, runButton);
         return header;
+    }
+
+    private Node createBrandMark() {
+        if (logoImage != null && !logoImage.isError()) {
+            ImageView logo = new ImageView(logoImage);
+            logo.getStyleClass().add("brand-logo");
+            logo.setFitWidth(42);
+            logo.setFitHeight(42);
+            logo.setPreserveRatio(true);
+            logo.setSmooth(true);
+            return logo;
+        }
+
+        Region fallback = new Region();
+        fallback.getStyleClass().add("brand-mark");
+        return fallback;
+    }
+
+    private Image loadLogoImage() {
+        java.net.URL logoUrl = getClass().getResource(LOGO_RESOURCE);
+        if (logoUrl == null) {
+            return null;
+        }
+
+        Image image = new Image(logoUrl.toExternalForm());
+        return image.isError() ? null : image;
     }
 
     private SplitPane createWorkspace(Stage stage) {
