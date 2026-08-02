@@ -14,18 +14,6 @@ In addition to basic conversion, the GUI includes a native build pipeline. After
 
 This project is suitable for Java desktop applications, server-side components, and other Java projects that need stronger resistance against static inspection and reverse engineering. It supports both interactive GUI usage and scriptable CLI usage.
 
-## Features
-
-- JavaFX GUI with a white and gray visual style.
-- Input JAR selection through file picker or drag and drop.
-- Optional libraries directory, blacklist file, and whitelist file configuration.
-- Target platform selection: `HotSpot`, `Standard`, and `Android`.
-- Optional `@Native` / `@NotNative` annotation handling.
-- Automatic C++ compilation through CMake and Ninja after conversion.
-- Optional local download of missing build tools.
-- Optional embedding of the compiled native dynamic library into the output JAR.
-
-
 ## Tech Stack
 
 - Java 8 source/target compatibility
